@@ -27,7 +27,6 @@ import com.example.compose.darkText
 import com.example.compose.lightText
 import com.example.compose.md_theme_dark_errorContainer
 import com.example.compose.md_theme_dark_primary
-import com.example.compose.md_theme_dark_tertiary
 import com.example.compose.md_theme_light_secondary
 import com.example.compose.progressBar
 import com.example.noteappfromcourse.R
