@@ -12,20 +12,33 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.noteappfromcourse.R
+import com.example.noteappfromcourse.dialog.MainDialog
 import com.example.noteappfromcourse.navigation.NavGraph
+import com.example.noteappfromcourse.shopping_list_screen.ShoppingListViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun MainScreen() {
+fun MainScreen(
+    mainNavHostController: NavHostController,
+    viewModel: MainScreenViewModel = hiltViewModel()
+) {
     val navController = rememberNavController()
     Scaffold(
         bottomBar = {
             BottomNav(navController)
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = { /*TODO*/ }, modifier = Modifier.offset(y = 50.dp)) {
+            FloatingActionButton(
+                onClick = {
+                    viewModel.onEvent(MainScreenEvent.OnShowEditDialog)
+                },
+                modifier = Modifier.offset(y = 50.dp)
+            ) {
                 Icon(
                     painter = painterResource(id = R.drawable.add_icon),
                     contentDescription = "Add",
@@ -37,6 +50,9 @@ fun MainScreen() {
 
     )
     {
-        NavGraph(navController)
+        NavGraph(navController) { route ->
+            mainNavHostController.navigate(route)
+        }
+        MainDialog(dialogController = viewModel)
     }
 }

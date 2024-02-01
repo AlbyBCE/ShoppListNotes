@@ -10,13 +10,16 @@ import com.example.noteappfromcourse.note_list_screen.NoteListScreen
 import com.example.noteappfromcourse.settings_screen.SettingsScreen
 import com.example.noteappfromcourse.shopping_list_screen.ShoppingListScreen
 import com.example.noteappfromcourse.utils.Routes
+import com.example.noteappfromcourse.utils.UiEvent
 
 @Composable
-fun NavGraph(navController:NavHostController) {
+fun NavGraph(navController: NavHostController, onNavigate: (String) -> Unit) {
 
-    NavHost(navController = navController, startDestination = Routes.SHOPPING_LIST){
+    NavHost(navController = navController, startDestination = Routes.SHOPPING_LIST) {
         composable(Routes.SHOPPING_LIST) {
-            ShoppingListScreen()
+            ShoppingListScreen() { route ->
+                onNavigate(route)
+            }
         }
         composable(Routes.NOTE_LIST) {
             NoteListScreen()
