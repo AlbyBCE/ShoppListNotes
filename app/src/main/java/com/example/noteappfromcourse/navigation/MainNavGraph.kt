@@ -20,13 +20,15 @@ import com.example.noteappfromcourse.utils.Routes
 @Composable
 fun MainNavGraph() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Routes.MAIN_SCREEN){
-        composable(Routes.ADD_ITEM + "/{listId}" ) {
+    NavHost(navController = navController, startDestination = Routes.MAIN_SCREEN) {
+        composable(Routes.ADD_ITEM + "/{listId}") {
 //            Log.d("My Log" , "List Id: ${it.savedStateHandle.get<String>("listId")}") передача аргументов, но тк  у нас вью модел оттуда будет идти получение аргументов.
             AddItemScreen()
         }
         composable(Routes.NEW_NOTE) {
-            NewNoteScreen ()
+            NewNoteScreen() {
+                navController.popBackStack() // для возврата назад
+            }
         }
         composable(Routes.MAIN_SCREEN) {
             MainScreen(navController)

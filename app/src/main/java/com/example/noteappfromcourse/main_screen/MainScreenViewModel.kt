@@ -49,14 +49,18 @@ class MainScreenViewModel @Inject constructor(
                 }
             }
 
-            is MainScreenEvent.OnShowEditDialog -> {
-                openDialog.value = true
+            is MainScreenEvent.OnNewItemClick -> {
+                if (event.route == Routes.SHOPPING_LIST) {
+                    openDialog.value = true
+                } else {
+                    sendUiEvent(UiEvent.NavigateMain(Routes.NEW_NOTE))
+                }
             }
 
             is MainScreenEvent.Navigate -> {
                 sendUiEvent(UiEvent.Navigate(event.route))
                 showFloatingButton.value = if
-                        (event.route == Routes.ABOUT || event.route == Routes.SETTINGS) {
+                                                   (event.route == Routes.ABOUT || event.route == Routes.SETTINGS) {
                     false
                 } else {
                     true
@@ -68,6 +72,8 @@ class MainScreenViewModel @Inject constructor(
                 sendUiEvent(UiEvent.NavigateMain(event.route))
 
             }
+
+            else -> {}
         }
     }
 

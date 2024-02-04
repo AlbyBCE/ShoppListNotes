@@ -24,6 +24,7 @@ import com.example.noteappfromcourse.R
 import com.example.noteappfromcourse.dialog.MainDialog
 import com.example.noteappfromcourse.navigation.NavGraph
 import com.example.noteappfromcourse.shopping_list_screen.ShoppingListViewModel
+import com.example.noteappfromcourse.utils.Routes
 import com.example.noteappfromcourse.utils.UiEvent
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -65,7 +66,7 @@ fun MainScreen(
             if (viewModel.showFloatingButton.value)
                 FloatingActionButton(
                     onClick = {
-                        viewModel.onEvent(MainScreenEvent.OnShowEditDialog)
+                        viewModel.onEvent(MainScreenEvent.OnNewItemClick(currentRoute ?: Routes.SHOPPING_LIST))
                     },
                     modifier = Modifier.offset(y = 50.dp)
                 ) {
