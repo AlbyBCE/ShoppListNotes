@@ -34,6 +34,7 @@ import com.example.compose.md_theme_light_secondary
 import com.example.compose.progressBar
 import com.example.noteappfromcourse.R
 import com.example.noteappfromcourse.data.ShoppingListItem
+import com.example.noteappfromcourse.utils.ProgressHelper
 import com.example.noteappfromcourse.utils.Routes
 
 
@@ -83,7 +84,10 @@ fun UIShoppingListItem(
                     fontSize = 12.sp
                 )
                 LinearProgressIndicator(
-                    progress = 0.5f,
+                    progress = ProgressHelper.getProgress(
+                        item.allItemsCount,
+                        item.allSelectedItemCount
+                    ),
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(5.dp),

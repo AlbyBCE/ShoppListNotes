@@ -25,16 +25,21 @@ import androidx.compose.ui.unit.sp
 import com.example.compose.darkText
 import com.example.compose.deeeeell
 import com.example.compose.lightText
+import com.example.noteappfromcourse.data.NoteItem
+import com.example.noteappfromcourse.utils.Routes
 
-@Preview(showBackground = true)
+
 @Composable
-fun UiNoteItem() {
+fun UiNoteItem(
+    item: NoteItem,
+    onEvent: (NoteListEvent) -> Unit
+) {
     Card(
         Modifier
             .fillMaxWidth()
             .padding(top = 3.dp, start = 3.dp, end = 3.dp)
             .clickable {
-
+                onEvent(NoteListEvent.OnItemClick(Routes.NEW_NOTE + "/${item.id}"))
             }
     ) {
         Column(Modifier.fillMaxWidth()) {
@@ -46,7 +51,7 @@ fun UiNoteItem() {
                             top = 10.dp,
                             start = 10.dp
                         ),
-                    text = "Note1",
+                    text = item.title,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -55,7 +60,7 @@ fun UiNoteItem() {
                         top = 10.dp,
                         end = 10.dp
                     ),
-                    text = "12.12.2023 12:00",
+                    text = item.time,
                     color = lightText,
                     fontSize = 12.sp
                 )
@@ -69,12 +74,14 @@ fun UiNoteItem() {
                             bottom = 5.dp
                         )
                         .weight(1f),
-                    text = "dsfssdf",
+                    text = item.description,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                     color = darkText
                 )
-                IconButton(onClick = { /*TODO*/ }) {
+                IconButton(onClick = {
+                    onEvent(NoteListEvent.OnShowDeleteDialog(item))
+                }) {
                     Icon(
                         imageVector = Icons.Default.Delete,
                         contentDescription = "Delete",

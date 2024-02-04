@@ -25,7 +25,7 @@ fun MainNavGraph() {
 //            Log.d("My Log" , "List Id: ${it.savedStateHandle.get<String>("listId")}") передача аргументов, но тк  у нас вью модел оттуда будет идти получение аргументов.
             AddItemScreen()
         }
-        composable(Routes.NEW_NOTE) {
+        composable(Routes.NEW_NOTE + "/{noteId}") {
             NewNoteScreen() {
                 navController.popBackStack() // для возврата назад
             }

@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.noteappfromcourse.data.NoteItem
 import com.example.noteappfromcourse.data.NoteRepository
 import com.example.noteappfromcourse.utils.UiEvent
+import com.example.noteappfromcourse.utils.getCurrentTime
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -32,7 +33,7 @@ class NewNoteViewModel @Inject constructor(
         private set
 
     init {
-        noteId = savedStateHandle.get<String>("")?.toInt() ?: -1
+        noteId = savedStateHandle.get<String>("noteId")?.toInt() ?: -1
         if (noteId != -1) {
             viewModelScope.launch {
                 repository.getNoteItemById(noteId).let { noteItem ->
@@ -48,16 +49,20 @@ class NewNoteViewModel @Inject constructor(
         when (event) {
             is NewNoteEvent.OnSave -> {
                 viewModelScope.launch {
+                    if (title.isEmpty()) {
+                        sendUiEvent(UiEvent.ShowSnackBar("Title can not be empty!"))
+                        return@launch
+                    }
                     repository.insertItem(
                         NoteItem(
                             noteItem?.id,
                             title,
                             decriprion,
-                            "12.12.2023 12:00"
+                            noteItem?.time ?:getCurrentTime()
                         )
                     )
+                    sendUiEvent(UiEvent.PopBackStack)
                 }
-                sendUiEvent(UiEvent.PopBackStack)
             }
 
             is NewNoteEvent.OnTitleChange -> {

@@ -8,6 +8,7 @@ import com.example.noteappfromcourse.data.ShoppingListRepository
 import com.example.noteappfromcourse.dialog.DialogEvent
 import com.example.noteappfromcourse.dialog.DialogController
 import com.example.noteappfromcourse.utils.UiEvent
+import com.example.noteappfromcourse.utils.getCurrentTime
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -22,6 +23,7 @@ class ShoppingListViewModel @Inject constructor(
     private var listItem: ShoppingListItem? = null
     private val _UiEvent = Channel<UiEvent>()
     val uiEvent = _UiEvent.receiveAsFlow()
+
     override var dialogTitle = mutableStateOf("")
         private set
     override var editableText = mutableStateOf("")
@@ -40,7 +42,7 @@ class ShoppingListViewModel @Inject constructor(
                         ShoppingListItem(
                             listItem?.id,
                             name = editableText.value,
-                            time = "12-12-2023 12:00",
+                            time = listItem?.time ?:getCurrentTime(),
                             listItem?.allItemsCount ?: 0,
                             listItem?.allSelectedItemCount ?: 0
                         )

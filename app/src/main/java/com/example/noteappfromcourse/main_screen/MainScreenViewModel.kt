@@ -9,6 +9,7 @@ import com.example.noteappfromcourse.dialog.DialogController
 import com.example.noteappfromcourse.dialog.DialogEvent
 import com.example.noteappfromcourse.utils.Routes
 import com.example.noteappfromcourse.utils.UiEvent
+import com.example.noteappfromcourse.utils.getCurrentTime
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -41,7 +42,7 @@ class MainScreenViewModel @Inject constructor(
                         ShoppingListItem(
                             null,
                             name = editableText.value,
-                            time = "12-12-2023 12:00",
+                            time = getCurrentTime(),
                             0,
                             0
                         )
@@ -53,7 +54,7 @@ class MainScreenViewModel @Inject constructor(
                 if (event.route == Routes.SHOPPING_LIST) {
                     openDialog.value = true
                 } else {
-                    sendUiEvent(UiEvent.NavigateMain(Routes.NEW_NOTE))
+                    sendUiEvent(UiEvent.NavigateMain(Routes.NEW_NOTE + "/-1") )
                 }
             }
 
